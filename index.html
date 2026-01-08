@@ -10,7 +10,7 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         body {
-            font-family: 'Plus+Jakarta+Sans', sans-serif;
+            font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: #020617; /* Deepest Slate/Black */
             color: #f8fafc;
         }
@@ -53,6 +53,13 @@
         .stagger-1 { animation-delay: 0.1s; }
         .stagger-2 { animation-delay: 0.2s; }
         .stagger-3 { animation-delay: 0.3s; }
+        
+        .logo-container img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+        }
     </style>
 </head>
 <body class="dark-hero-gradient min-h-screen">
@@ -108,9 +115,10 @@
         const brands = [
             {
                 name: "Liquidation Center",
+                logo: "https://liquidationcenter.ca/wp-content/uploads/2023/07/logo_new.png",
                 url: "https://liquidationcenter.ca",
                 cat: "Retail",
-                icon: "https://liquidationcenter.ca/wp-content/uploads/2023/07/logo_new.png",
+                icon: "shopping-bag",
                 description: "The ultimate destination for premium brand-name inventory at unbeatable liquidation prices. We bridge the gap between major retailers and savvy consumers.",
                 highlight: "Premium Savings"
             },
@@ -196,6 +204,11 @@
             card.target = "_blank";
             card.className = `glass-card p-8 rounded-3xl flex flex-col h-full animate-fade-in stagger-${(index % 3) + 1}`;
             
+            // Generate the logo section: Image if available, otherwise stylized text
+            const logoContent = brand.logo 
+                ? `<img src="${brand.logo}" alt="${brand.name} Logo" class="max-h-10">`
+                : `<span class="text-[10px] text-slate-500 font-bold">${brand.name.toUpperCase()}</span>`;
+
             card.innerHTML = `
                 <div class="flex justify-between items-start mb-6">
                     <div class="h-12 w-12 bg-blue-900/30 text-blue-400 rounded-2xl flex items-center justify-center border border-blue-800/50">
@@ -205,9 +218,9 @@
                 </div>
                 
                 <div class="mb-4">
-                    <!-- Brand Logo Placeholder -->
-                    <div class="h-12 w-32 bg-slate-900/50 rounded-lg mb-4 flex items-center justify-center border border-slate-800">
-                        <span class="text-[10px] text-slate-500 font-bold">${brand.name.toUpperCase()}</span>
+                    <!-- Brand Logo Container -->
+                    <div class="logo-container h-12 w-40 bg-slate-900/50 rounded-lg mb-4 flex items-center justify-center border border-slate-800 p-2">
+                        ${logoContent}
                     </div>
                     <h3 class="text-xl font-bold text-white group-hover:text-blue-400 transition-colors">${brand.name}</h3>
                 </div>
